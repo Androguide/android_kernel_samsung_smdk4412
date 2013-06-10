@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2012 ARM Limited. All rights reserved.
- * 
+ *
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- * 
+ *
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -105,6 +105,8 @@ static void ump_vma_close(struct vm_area_struct * vma)
 	new_val = atomic_dec_return(&vma_usage_tracker->references);
 
 	DBG_MSG(4, ("VMA close, VMA reference count decremented. VMA: 0x%08lx, reference count: %d\n", (unsigned long)vma, new_val));
+
+	vma_usage_tracker->descriptor->process_mapping_info = vma;
 
 	if (0 == new_val)
 	{
@@ -319,11 +321,7 @@ void _ump_osk_msync( ump_dd_mem * mem, void * virt, u32 offset, u32 size, ump_uk
 		end_v   = (void *)(start_v + size - 1);
 		/*  There is no dmac_clean_range, so the L1 is always flushed,
 		 *  also for UMP_MSYNC_CLEAN. */
-		if (size >= SZ_64K)
-			flush_all_cpu_caches();
-		else
-			dmac_flush_range(start_v, end_v);
-
+		dmac_flush_range(start_v, end_v);
 		DBG_MSG(3, ("UMP[%02u] Flushing CPU L1 Cache. Cpu address: %x-%x\n", mem->secure_id, start_v,end_v));
 	}
 	else
@@ -372,14 +370,6 @@ void _ump_osk_msync( ump_dd_mem * mem, void * virt, u32 offset, u32 size, ump_uk
 
 
 	/* Flush L2 using physical addresses, block for block. */
-	if ((virt!=NULL) && (mem->size_bytes >= SZ_1M)) {
-		if (op == _UMP_UK_MSYNC_CLEAN)
-			outer_clean_all();
-		else if ((op == _UMP_UK_MSYNC_INVALIDATE) || (op == _UMP_UK_MSYNC_CLEAN_AND_INVALIDATE))
-			outer_flush_all();
-		return;
-	}
-
 	for (i=0 ; i < mem->nr_blocks; i++)
 	{
 		u32 start_p, end_p;
@@ -482,4 +472,3 @@ void _ump_osk_mem_mapregion_get( ump_dd_mem ** mem, unsigned long vaddr)
 	DBG_MSG(3, ("Get handle: 0x%08lx\n", handle));
 	*mem = (ump_dd_mem*)handle;
 }
-

@@ -1,4 +1,3 @@
-
 This repository contains the Pegasus (Exynos4412) Kernel sources for Ubuntu Touch.
 This code is Licensed under the GPL version 2 or later.
 
@@ -207,7 +206,8 @@ kernel, and what to do if something goes wrong.
    You can find more information on using the Linux kernel config tools
    in Documentation/kbuild/kconfig.txt.
 
-	*NOTES on "make config":*
+
+	**NOTES on "make config":**
 	* having unnecessary drivers will make the kernel bigger, and can
 	  under some circumstances lead to problems: probing for a
 	  nonexistent controller card may confuse your other controllers

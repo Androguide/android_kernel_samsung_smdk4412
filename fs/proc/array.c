@@ -341,6 +341,13 @@ static void task_cpus_allowed(struct seq_file *m, struct task_struct *task)
 	seq_putc(m, '\n');
 }
 
+// Add method to handle VPID & namespaces for the Ubuntu Touch container
+static void task_vpid(struct seq_file *m, struct task_struct *task)
+{
+        struct pid_namespace *ns = task_active_pid_ns(task);
+        seq_printf(m, "Vpid:\t%d\n", ns ? task_pid_nr_ns(task, ns) : 0);
+}
+
 int proc_pid_status(struct seq_file *m, struct pid_namespace *ns,
 			struct pid *pid, struct task_struct *task)
 {
@@ -358,6 +365,10 @@ int proc_pid_status(struct seq_file *m, struct pid_namespace *ns,
 	task_cpus_allowed(m, task);
 	cpuset_task_status_allowed(m, task);
 	task_context_switch_counts(m, task);
+
+	// Call our added method with the right parameters
+	task_vpid(m, task);
+
 	return 0;
 }
 

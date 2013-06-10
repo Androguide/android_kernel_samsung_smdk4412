@@ -8,8 +8,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef __MALI_UTGARD_IOCTL_H__
-#define __MALI_UTGARD_IOCTL_H__
+#ifndef __MALI_KERNEL_IOCTL_H__
+#define __MALI_KERNEL_IOCTL_H__
 
 #include <linux/types.h>
 #include <linux/ioctl.h>
@@ -59,7 +59,6 @@ extern "C"
 #define MALI_IOC_PP_START_JOB               _IOWR(MALI_IOC_PP_BASE, _MALI_UK_PP_START_JOB, _mali_uk_pp_start_job_s *)
 #define MALI_IOC_PP_NUMBER_OF_CORES_GET	    _IOR (MALI_IOC_PP_BASE, _MALI_UK_GET_PP_NUMBER_OF_CORES, _mali_uk_get_pp_number_of_cores_s *)
 #define MALI_IOC_PP_CORE_VERSION_GET	    _IOR (MALI_IOC_PP_BASE, _MALI_UK_GET_PP_CORE_VERSION, _mali_uk_get_pp_core_version_s * )
-#define MALI_IOC_PP_DISABLE_WB              _IOW (MALI_IOC_PP_BASE, _MALI_UK_PP_DISABLE_WB, _mali_uk_pp_disable_wb_s * )
 #define MALI_IOC_GP2_START_JOB              _IOWR(MALI_IOC_GP_BASE, _MALI_UK_GP_START_JOB, _mali_uk_gp_start_job_s *)
 #define MALI_IOC_GP2_NUMBER_OF_CORES_GET    _IOR (MALI_IOC_GP_BASE, _MALI_UK_GET_GP_NUMBER_OF_CORES, _mali_uk_get_gp_number_of_cores_s *)
 #define MALI_IOC_GP2_CORE_VERSION_GET	    _IOR (MALI_IOC_GP_BASE, _MALI_UK_GET_GP_CORE_VERSION, _mali_uk_get_gp_core_version_s *)
@@ -70,11 +69,10 @@ extern "C"
 #define MALI_IOC_PROFILING_GET_EVENT        _IOWR(MALI_IOC_PROFILING_BASE, _MALI_UK_PROFILING_GET_EVENT, _mali_uk_profiling_get_event_s *)
 #define MALI_IOC_PROFILING_CLEAR            _IOWR(MALI_IOC_PROFILING_BASE, _MALI_UK_PROFILING_CLEAR, _mali_uk_profiling_clear_s *)
 #define MALI_IOC_PROFILING_GET_CONFIG       _IOWR(MALI_IOC_PROFILING_BASE, _MALI_UK_PROFILING_GET_CONFIG, _mali_uk_get_user_settings_s *)
-#define MALI_IOC_PROFILING_REPORT_SW_COUNTERS  _IOW (MALI_IOC_PROFILING_BASE, _MALI_UK_PROFILING_REPORT_SW_COUNTERS, _mali_uk_sw_counters_report_s *)
 #define MALI_IOC_VSYNC_EVENT_REPORT         _IOW (MALI_IOC_VSYNC_BASE, _MALI_UK_VSYNC_EVENT_REPORT, _mali_uk_vsync_event_report_s *)
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __MALI_UTGARD_IOCTL_H__ */
+#endif /* __MALI_KERNEL_IOCTL_H__ */
